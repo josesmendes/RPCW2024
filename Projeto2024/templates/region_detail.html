@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elden Ring: {{ data.details.name }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='ER_logo.png') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/w3.css') }}"/>
+</head>
+<body>
+    <div class="w3-card-4">
+        <header class="w3-container w3-blue-grey">
+            <h1>{{ data.details.name }}</h1>
+            <p><a href="/">[Página Principal]</a></p>
+            <p><a href="/regions">[Página das Regiões]</a></p>
+            <form action="/regions" method="post">
+                <input type="hidden" name="item_type" value="delete">
+                <input type="hidden" name="item_uri" value={{data.type}}>
+                <button class="w3-right w3-button w3-blue"  onclick="location.href='/regions'">Delete entry</button>
+            </form>
+        </header>
+        <div class="w3-container">
+            {% if data.details.bosses %}
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey" style="margin-top: 2%">
+                    <h4>Bosses</h4>
+                </header>
+                <ul class="w3-ul">
+                    {% for boss in data.details.bosses %}
+                    <li><a href="{{ url_for('boss', boss=boss.uri.split('/')[-1]) }}">{{ boss.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <meta charset="utf-8"/>
+        <title>Elden Ring : {{ data.type }}</title>
+        <link rel="icon" href="{{ url_for('static', filename='ER_logo.png') }}"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/w3.css') }}"/>    
+    </header>
+    <body>
+        <div class="w3-card-4">
+            <header class="w3-container w3-blue-grey">
+                <h1>{{ data.name }}</h1>
+                <p><a href="/">[Página Principal]</a></p>
+                <p><a href="/weapons">[Página das armas]</a></p>
+            </header>
+            <div class="w3-container">
+                <table class="w3-table-all" style="margin-top: 2%;">
+                    <tr>
+                        <th>Weapon</th>
+                    </tr>
+                    {% for entry in data.data %}
+                    <tr>
+                        <td>
+                            <img src= {{ entry.img.value }} alt="weapon image" style="width: 200px; height: auto;">
+                            <p><a href="{{url_for('weapon', weapon_type = data.type, weapon = entry.weapon.value.split('/')[-1]) }}"> {{ entry.name.value }}</a></p>   
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Elden Ring : {{ data.data.name.value }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='ER_logo.png') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/w3.css') }}"/>    
+</head>
+<body>
+    <div class="w3-card-4">
+        <header class="w3-container w3-blue-grey">
+            <h1>{{ data.data.name.value }}</h1>
+            <p><img src="{{ data.data.img.value }}" alt="weapon image" style="width: 100px; height: auto;"></p>
+            <p><a href="/">[Página Principal]</a></p>
+            <p><a href="/bosses">[Página dos Bosses]</a></p>
+            <form action="/bosses" method="post">
+                <input type="hidden" name="item_type" value="delete">
+                <input type="hidden" name="item_uri" value={{data.type}}>
+                <button class="w3-right w3-button w3-blue"  onclick="location.href='/bosses'">Delete entry</button>
+            </form>
+        </header>
+        <div class="w3-container">
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey" style="margin-top: 2%;">
+                    <h4>Descrição</h4>
+                </header>
+                <p>{{ data.data.desc.value }}</p>
+            </div>
+            {% if "location" in data.data.keys() %}
+
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey">
+                    <h4>Localização</h4>
+                </header>
+                <p>
+                    <a href="/locations/{{ data.data.location.value.split('/')[-1] }}">{{ data.data.location.value.split('/')[-1].replace('_', ' ') }}</a>
+                </p>
+            </div>
+            {% endif %}
+
+            {% if "region" in data.data.keys() %}
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey">
+                    <h4>Região</h4>
+                </header>
+                <p>
+                    <a href="/regions/{{ data.data.region.value.split('/')[-1] }}">{{ data.data.region.value.split('/')[-1].replace('_', ' ') }}</a>
+                </p>
+            </div>
+            {% endif %}
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey">
+                    <h4>Health Points</h4>
+                </header>
+                <p>{{ data.data.hp.value }}</p>
+            </div>
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey">
+                    <h4>Drops</h4>
+                </header>
+                <p>{{ data.data.runes.value }}</p>
+                {% if "drops" in data.data.keys() %}
+                {% for drop in data.data.drops.value.keys() %}
+                <a href="/{{data.data.drops.value[drop][0]}}">  {{data.data.drops.value[drop][1]}} </a>
+                <br>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

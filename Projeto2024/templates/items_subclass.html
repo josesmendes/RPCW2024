@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elden Ring: {{ subclass.replace('_', ' ') }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='ER_logo.png') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/w3.css') }}"/>
+</head>
+<body>
+    <div class="w3-card-4">
+        <header class="w3-container w3-blue-grey">
+            <h1>{{ subclass.replace('_', ' ') }}</h1>
+            <p><a href="/">[Página Principal]</a></p>
+            <p><a href="/items">[Página dos Itens]</a></p>
+        </header>
+        <div class="w3-container">
+            <table class="w3-table-all" style="margin-top: 2%;">
+                <tr>
+                    <th>Item</th>
+                </tr>
+                {% for entry in data %}
+                <tr>
+                    <td>
+                        {% if entry['img'] %}
+                            <img src="{{ entry['img'] }}" alt="{{ entry['name'] }}" style="width: 200px; height: auto;">
+                        {% else %}
+                            <p>Sem imagem</p>
+                        {% endif %}
+                        <p><a href="{{ url_for('item_detail', subclass=subclass, item=entry['item'].split('/')[-1]) }}">{{ entry['name'] }}</a></p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

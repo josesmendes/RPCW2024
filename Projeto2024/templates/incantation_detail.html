@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elden Ring: {{ data.details.name }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='ER_logo.png') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/w3.css') }}"/>
+</head>
+<body>
+    <div class="w3-card-4">
+        <header class="w3-container w3-blue-grey">
+            <h1>{{ data.details.name }}</h1>
+            {% if data.details.img %}
+                <p><img src="{{ data.details.img }}" alt="incantation image" style="width: 100px; height: auto;"></p>
+            {% endif %}
+            <p><a href="/">[Página Principal]</a></p>
+            <p><a href="/incantations">[Página das Incantations]</a></p>
+            <form action="/incantations" method="post">
+                <input type="hidden" name="item_type" value="delete">
+                <input type="hidden" name="item_uri" value={{data.type}}>
+                <button class="w3-right w3-button w3-blue"  onclick="location.href='/incantations'">Delete entry</button>
+            </form>
+        </header>
+        <div class="w3-container">
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey" style=" margin-top: 2%;">
+                    <h4>Descrição</h4>
+                </header>
+                <p>{{ data.details.desc }}</p>
+            </div>
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey" >
+                    <h4>Efeitos</h4>
+                </header>
+                <p>{{ data.details.effects }}</p>
+            </div>
+            <div class="w3-container" >
+                <header class="w3-container w3-blue-grey">
+                    <h4>Custo de FP</h4>
+                </header>
+                <p>{{ data.details.cost }}</p>
+            </div>
+            <div class="w3-container" >
+                <header class="w3-container w3-blue-grey" >
+                    <h4>Slots</h4>
+                </header>
+                <p>{{ data.details.slots }}</p>
+            </div>
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey" >
+                    <h4>Requisitos</h4>
+                </header>
+                <table class="w3-table-all">
+                    <tr>
+                        {% for req in data.details.requires %}
+                        <td>{{ req.name }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for req in data.details.requires %}
+                        <td>{{ req.amount }}</td>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            {% if data.details.boss != None %}
+            <div class="w3-container" >
+                <header class="w3-container w3-blue-grey" >
+                    <h4>Droped by</h4>
+                </header>
+                <a href="/bosses/{{ data.details.boss.split('/')[-1] }}">{{ data.details.boss_name }}</a>
+                <br>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

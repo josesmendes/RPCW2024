@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elden Ring: Items</title>
+    <link rel="icon" href="{{ url_for('static', filename='ER_logo.png') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/w3.css') }}"/>
+</head>
+<body>
+    <div class="w3-card-4">
+        <header class="w3-container w3-blue-grey">
+            <h1>Items</h1>
+            <p><a href="/">[Página Principal]</a></p>
+        </header>
+        <div class="w3-container">
+            <table class="w3-table-all" style="margin-top: 2%;">
+                <tr>
+                    <th>Tipos de items</th>
+                </tr>
+                {% for entry in data %}
+                <tr>
+                    <td><a href="/items/{{ entry['subclass'].split('/')[-1] }}">{{ entry['subclass'].split('/')[-1].replace('_', ' ') }}</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+

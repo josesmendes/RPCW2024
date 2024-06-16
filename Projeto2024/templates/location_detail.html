@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elden Ring: {{ data.details.name }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='ER_logo.png') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/w3.css') }}"/>
+</head>
+<body>
+    <div class="w3-card-4">
+        <header class="w3-container w3-blue-grey">
+            <h1>{{ data.details.name }}</h1>
+            {% if data.details.img %}
+                <p><img src="{{ data.details.img }}" alt="location image" style="width: 100px; height: auto;"></p>
+            {% endif %}
+            <p><a href="/">[Página Principal]</a></p>
+            <p><a href="/locations">[Página das Localizações]</a></p>
+            <form action="/locations" method="post">
+                <input type="hidden" name="item_type" value="delete">
+                <input type="hidden" name="item_uri" value={{data.type}}>
+                <button class="w3-right w3-button w3-blue"  onclick="location.href='/locations'">Delete entry</button>
+            </form>
+        </header>
+        <div class="w3-container">
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey" style="margin-top:2%">
+                    <h4>Descrição</h4>
+                </header>
+                <p>{{ data.details.desc }}</p>
+            </div>
+            {% if data.details.region and data.details.region_name %}
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey">
+                    <h4>Região</h4>
+                </header>
+                <p><a href="/regions/{{ data.details.region.split('/')[-1] }}">{{ data.details.region_name }}</a></p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

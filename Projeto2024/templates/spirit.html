@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Elden Ring : {{ data.data[0].name.value }}</title>
+    <link rel="icon" href="{{ url_for('static', filename='ER_logo.png') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/w3.css') }}"/>    
+</head>
+<body>
+    <div class="w3-card-4">
+        <header class="w3-container w3-blue-grey">
+            <h1>{{ data.data[0].name.value }}</h1>
+            <p><img src="{{ data.data[0].img.value }}" alt="weapon image" style="width: 100px; height: auto;"></p>
+            <p><a href="/">[Página Principal]</a></p>
+            <p><a href="/spirits">[Página dos espiritos]</a></p>
+            <form action="/spirits" method="post">
+                <input type="hidden" name="item_type" value="delete">
+                <input type="hidden" name="item_uri" value={{data.type}}>
+                <button class="w3-right w3-button w3-blue"  onclick="location.href='/spirits'">Delete entry</button>
+            </form>
+        </header>
+        <div class="w3-container">
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey" style = "margin-top:2%">
+                    <h4>Descrição</h4>
+                </header>
+                <p>{{ data.data[0].desc.value }}</p>
+            </div>
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey">
+                    <h4>Efeito</h4>
+                </header>
+                <p>{{ data.data[0].eft.value }}</p>
+            </div>
+            <div class="w3-container">
+                {% if data.data[0].fp_cost.value != "0" %}
+                <header class="w3-container w3-blue-grey">
+                    <h4>Custo de mana</h4>
+                </header>
+                <p>{{ data.data[0].fp_cost.value }}</p>
+                {% elif data.data[0].hp_cost.value != "0" %}
+                <header class="w3-container w3-blue-grey">
+                    <h4>Custo de vida</h4>
+                </header>
+                <p>{{ data.data[0].hp_cost.value }}</p>
+                {% else %}
+                <header class="w3-container w3-blue-grey">
+                    <h4>Sem custo de invocação</h4>
+                </header>
+                {% endif %}
+            </div>
+            {% if "boss" in data.data[0].keys() %}
+            <div class="w3-container">
+                <header class="w3-container w3-blue-grey">
+                    <h4>dropado por</h4>
+                </header>
+                <a href="/bosses/{{ data.data[0].boss.value.split('/')[-1]}}">{{ data.data[0].boss_name.value }}</a>
+                <br>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
